@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#07111f">
-    <meta name="description" content="LightBlu makes immersive VR games for Meta Quest. Discover Revolt, our early-access horror game.">
+    <meta name="theme-color" content="#050b14">
+    <meta name="description" content="LightBlu makes immersive VR games for Meta Quest. Discover Revolt, MBG:VR, and Presence.">
     <title>LightBlu</title>
     <link rel="icon" type="image/x-icon" href="images/LB.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,44 +13,46 @@
     <style>
         :root {
             color-scheme: dark;
-            --bg: #07111f;
-            --surface: #0d1a2b;
-            --surface-raised: #112239;
-            --text: #f2f1f8;
-            --muted: #9aacc2;
-            --accent: #64b5ff;
-            --accent-glow: #42a5ff55;
-            --mint: #8de2ff;
-            --border: #a9ceff1a;
+            --bg: #050b14;
+            --surface: #0a1424;
+            --surface-raised: #0f1d32;
+            --text: #f0f4f8;
+            --muted: #8899ac;
+            --accent: #3b9eff;
+            --accent-hover: #60b2ff;
+            --border: #1e2e46;
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-
+        
         body {
             background: var(--bg);
             color: var(--text);
-            font: 16px/1.65 "Inter", system-ui, sans-serif;
+            font: 16px/1.6 "Inter", system-ui, sans-serif;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         a { color: inherit; text-decoration: none; }
-
+        
         .wrap {
-            width: min(1120px, calc(100% - 40px));
+            width: min(1120px, calc(100% - 48px));
             margin-inline: auto;
         }
 
+        /* Header / Nav */
         header {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: #07111fee;
-            backdrop-filter: blur(16px);
+            background: rgba(5, 11, 20, 0.9);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
         }
 
         nav {
-            min-height: 72px;
+            min-height: 76px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -60,26 +62,17 @@
         .brand {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.15rem;
+            gap: 12px;
+            font-size: 1.1rem;
             font-weight: 800;
-            letter-spacing: 0.04em;
+            letter-spacing: -0.02em;
         }
 
         .brand img {
             display: block;
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             object-fit: contain;
-        }
-
-        .hero-logo {
-            display: block;
-            width: min(320px, 100%);
-            max-width: 100%;
-            height: auto;
-            margin-inline: auto;
-            filter: drop-shadow(0 18px 40px rgba(100, 181, 255, 0.18));
         }
 
         .nav-links {
@@ -90,105 +83,57 @@
 
         .nav-links a {
             color: var(--muted);
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            transition: color 0.2s;
-            position: relative;
+            transition: color 0.15s ease;
         }
 
-        .nav-links a:hover { color: var(--text); }
-
-        .nav-links a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -4px;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.25s ease;
+        .nav-links a:hover { 
+            color: var(--text); 
         }
-
-        .nav-links a:hover::after { width: 100%; }
 
         .nav-cta {
             background: var(--accent);
-            color: #061321 !important;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
+            color: #050b14 !important;
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-weight: 700;
             font-size: 0.88rem;
+            transition: background 0.15s ease, transform 0.15s ease !important;
         }
 
-        .nav-cta::after { display: none !important; }
-        .nav-cta:hover { filter: brightness(1.12); color: #061321 !important; }
+        .nav-cta:hover { 
+            background: var(--accent-hover); 
+            transform: translateY(-1px);
+        }
 
+        /* Hero Section */
         .hero {
-            position: relative;
-            padding: 100px 0 110px;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 65% 65% at 12% 12%, #1768b644, transparent 62%),
-                radial-gradient(ellipse 45% 60% at 82% 48%, #008cc52b, transparent 64%);
-            pointer-events: none;
-        }
-
-        .hero-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(#ffffff06 1px, transparent 1px),
-                linear-gradient(90deg, #ffffff06 1px, transparent 1px);
-            background-size: 48px 48px;
-            mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-            pointer-events: none;
-            animation: gridPulse 12s ease-in-out infinite;
+            padding: 120px 0 100px;
+            border-bottom: 1px solid var(--border);
+            animation: fadeIn 0.8s ease-out;
         }
 
         .hero-layout {
-            position: relative;
             display: grid;
-            grid-template-columns: 1.05fr 0.95fr;
+            grid-template-columns: 1.1fr 0.9fr;
             align-items: center;
-            gap: 56px;
+            gap: 64px;
         }
-
-        .hero-copy .eyebrow,
-        .hero-copy h1,
-        .hero-copy .hero-sub,
-        .hero-copy .hero-actions,
-        .hero-copy .platform-badge {
-            opacity: 0;
-            animation: fadeUp 0.6s ease forwards;
-        }
-
-        .hero-copy .eyebrow { animation-delay: 0.1s; }
-        .hero-copy h1 { animation-delay: 0.2s; }
-        .hero-copy .hero-sub { animation-delay: 0.35s; }
-        .hero-copy .hero-actions { animation-delay: 0.5s; }
-        .hero-copy .platform-badge { animation-delay: 0.65s; }
 
         .hero h1 {
-            max-width: 620px;
-            margin: 0 0 18px;
-            font-size: clamp(3rem, 6.5vw, 5.5rem);
-            line-height: 1.02;
-            letter-spacing: -0.065em;
+            margin: 0 0 16px;
+            font-size: clamp(3.2rem, 7vw, 5.2rem);
+            line-height: 1.05;
+            letter-spacing: -0.04em;
             font-weight: 800;
         }
 
-        .hero h1 span { color: var(--accent); }
-
         .hero-sub {
             max-width: 480px;
-            margin: 0 0 28px;
+            margin: 0 0 32px;
             color: var(--muted);
-            font-size: 1.08rem;
+            font-size: 1.12rem;
         }
 
         .hero-actions {
@@ -197,165 +142,23 @@
             flex-wrap: wrap;
         }
 
-        .hero-feature {
-            position: relative;
-            min-height: 360px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 34px;
-            overflow: hidden;
-            isolation: isolate;
-            border: 1px solid #8acaff30;
-            border-radius: 24px;
-            background: linear-gradient(155deg, #102c4a 0%, #0a192a 54%, #081321 100%);
-            box-shadow: 0 30px 90px #0006, inset 0 1px #ffffff0d;
-            animation: fadeUp 0.8s ease 0.25s both;
-        }
-
-        .hero-feature::before,
-        .hero-feature::after {
-            position: absolute;
-            z-index: -1;
-            content: "";
-            pointer-events: none;
-        }
-
-        .hero-feature::before {
-            width: 380px;
-            height: 380px;
-            top: -126px;
-            right: -40px;
-            border: 1px solid #8acaff2b;
-            border-radius: 50%;
-            box-shadow: 0 0 0 36px #8acaff09, 0 0 0 74px #8acaff08;
-        }
-
-        .hero-feature::after {
-            inset: 0;
-            background: linear-gradient(0deg, #07111f 0%, transparent 66%);
-        }
-
-        .feature-orbit {
-            position: absolute;
-            width: 230px;
-            height: 230px;
-            top: 42px;
-            right: 58px;
-            border: 1px solid #74c1ff66;
-            border-radius: 50%;
-            box-shadow: inset 0 0 70px #3c9dff20, 0 0 60px #1c75c333;
-            transform: rotate(-28deg) scaleY(0.66);
-        }
-
-        .feature-orbit::before,
-        .feature-orbit::after {
-            position: absolute;
-            content: "";
-            border: 1px solid #74c1ff3d;
-            border-radius: 50%;
-        }
-
-        .feature-orbit::before { inset: 18px -34px; transform: rotate(58deg); }
-        .feature-orbit::after { inset: -30px 45px; transform: rotate(-36deg); }
-
-        .feature-dot {
-            position: absolute;
-            width: 9px;
-            height: 9px;
-            top: 77px;
-            right: 134px;
-            border-radius: 50%;
-            background: #c7edff;
-            box-shadow: 0 0 24px 8px #45aaff88;
-        }
-
-        .feature-topline {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #bed8f0;
-            font-size: 0.73rem;
-            font-weight: 700;
-            letter-spacing: 0.13em;
-            text-transform: uppercase;
-        }
-
-        .feature-topline::before {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--accent);
-            box-shadow: 0 0 12px var(--accent);
-            content: "";
-        }
-
-        .hero-feature h2 {
-            margin-top: 14px;
-            font-size: clamp(2.8rem, 5vw, 4.5rem);
-            line-height: 1;
-            letter-spacing: -0.06em;
-        }
-
-        .hero-feature p {
-            max-width: 300px;
-            margin-top: 10px;
-            color: #b1c2d5;
-        }
-
-        .feature-footer {
-            display: flex;
-            gap: 8px;
-            margin-top: 24px;
-        }
-
-        .feature-footer span {
-            padding: 5px 10px;
-            border: 1px solid #b3d6f52e;
-            border-radius: 999px;
-            color: #c9ddef;
-            font-size: 0.75rem;
-        }
-
-        @keyframes gridPulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.7; }
-        }
-
-        .eyebrow {
-            display: inline-block;
-            color: var(--mint);
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            margin-bottom: 18px;
-        }
-
-        .hero-sub {
-            max-width: 480px;
-            margin: 0 0 28px;
-            color: var(--muted);
-            font-size: 1.08rem;
-        }
-
         .button {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 22px;
-            border-radius: 10px;
+            padding: 12px 24px;
+            border-radius: 6px;
             background: var(--accent);
-            color: #061321;
+            color: #050b14;
             font-weight: 700;
             font-size: 0.95rem;
-            transition: transform 0.2s, filter 0.2s, box-shadow 0.2s;
+            transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
         }
 
         .button:hover {
-            filter: brightness(1.1);
+            background: var(--accent-hover);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--accent-glow);
+            box-shadow: 0 4px 20px rgba(59, 158, 255, 0.25);
         }
 
         .button-outline {
@@ -365,64 +168,85 @@
         }
 
         .button-outline:hover {
-            border-color: var(--accent);
-            background: #64b5ff12;
-            filter: none;
+            border-color: var(--muted);
+            background: var(--surface);
             box-shadow: none;
         }
 
-        .platform-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 36px;
-            padding: 8px 14px;
-            border-radius: 999px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--muted);
+        .hero-logo {
+            display: block;
+            width: min(280px, 100%);
+            margin-inline: auto;
+            height: auto;
         }
 
-        .platform-badge strong { color: var(--text); }
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-        section { padding: 80px 0; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sections General */
+        section { 
+            padding: 90px 0; 
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
 
         .section-heading {
-            margin: 0 0 10px;
-            font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+            font-size: clamp(2rem, 4vw, 2.6rem);
             letter-spacing: -0.03em;
             font-weight: 800;
+            margin-bottom: 8px;
         }
 
         .section-intro {
-            margin: 0 0 36px;
             color: var(--muted);
-            max-width: 480px;
+            font-size: 1.05rem;
         }
 
-        .game-showcase {
+        /* Game Showcases */
+        .game-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .game-card {
             display: grid;
-            grid-template-columns: 1.05fr 1fr;
-            gap: 0;
+            grid-template-columns: 1.1fr 1fr;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 18px;
+            border-radius: 12px;
             overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: border-color 0.2s ease, transform 0.2s ease;
         }
 
-        .game-showcase.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .game-card:hover {
+            border-color: rgba(59, 158, 255, 0.3);
+            transform: translateY(-3px);
         }
 
         .game-visual {
-            position: relative;
-            min-height: 320px;
-            background: #102741;
+            background: var(--surface-raised);
+            min-height: 340px;
             overflow: hidden;
         }
 
@@ -431,194 +255,134 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            min-height: 320px;
+            transition: transform 0.4s ease;
         }
 
-        /* Placeholder visual when no image */
-        .game-visual.placeholder {
+        .game-card:hover .game-visual img {
+            transform: scale(1.03);
+        }
+
+        .game-content { 
+            padding: 40px; 
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            background: linear-gradient(145deg, #0f2744 0%, #0a1a2e 50%, #07111f 100%);
         }
-
-        .game-visual.placeholder::after {
-            content: "Presence VR";
-            font-size: 1.6rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            color: #64b5ff66;
-            text-transform: uppercase;
-        }
-
-        .game-content { padding: 36px 36px 36px 32px; }
 
         .game-tag {
             display: inline-block;
-            padding: 4px 10px;
-            border-radius: 6px;
-            background: #64b5ff22;
             color: var(--accent);
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .game-content h3 {
-            font-size: 1.85rem;
+            font-size: 2rem;
             font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
         }
 
         .game-meta {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px 18px;
+            gap: 16px;
             margin-bottom: 16px;
-            font-size: 0.86rem;
+            font-size: 0.85rem;
             color: var(--muted);
+            font-weight: 500;
         }
 
         .game-content p {
             color: var(--muted);
-            margin-bottom: 22px;
-            line-height: 1.7;
+            margin-bottom: 24px;
+            line-height: 1.6;
         }
 
         .game-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
+            flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 26px;
+            margin-bottom: 28px;
         }
 
         .feature-chip {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.88rem;
-            color: var(--text);
-        }
-
-        .feature-chip::before {
-            content: "▸";
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        /* Progress bar for Presence */
-        .dev-progress {
-            margin-bottom: 28px;
-            padding: 20px 22px;
-            background: var(--surface);
+            background: var(--bg);
             border: 1px solid var(--border);
-            border-radius: 14px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.82rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Progress Bar for In-Development */
+        .dev-progress {
+            margin-bottom: 24px;
+            padding: 16px 20px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
         }
 
         .dev-progress-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            gap: 12px;
-        }
-
-        .dev-progress-label {
+            margin-bottom: 8px;
             font-size: 0.82rem;
             font-weight: 600;
-            color: var(--muted);
-            letter-spacing: 0.04em;
             text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--muted);
         }
 
         .dev-progress-value {
-            font-size: 0.95rem;
-            font-weight: 700;
             color: var(--accent);
         }
 
         .progress-track {
-            height: 10px;
-            background: #0a1628;
+            height: 6px;
+            background: var(--surface-raised);
             border-radius: 999px;
             overflow: hidden;
-            border: 1px solid #64b5ff22;
         }
 
         .progress-fill {
             height: 100%;
-            width: 90%; 
+            background: var(--accent);
             border-radius: 999px;
-            background: linear-gradient(90deg, #3a9bff, #64b5ff, #8de2ff);
-            box-shadow: 0 0 18px #64b5ff66;
-            transition: width 0.6s ease;
         }
 
-        .about {
-            border-block: 1px solid var(--border);
-            background: #ffffff04;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: start;
-        }
-
-        .about-copy {
-            color: var(--muted);
-            line-height: 1.75;
-        }
-
-        .about-copy p + p { margin-top: 14px; }
-
-        .about-image {
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            aspect-ratio: 16 / 10;
-        }
-
-        .about-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .credits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-        }
-
+        /* Team Section */
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
         }
 
         .team-card {
-            overflow: hidden;
-            border: 1px solid var(--border);
-            border-radius: 16px;
+            display: block;
             background: var(--surface);
-            transition: transform 0.2s, border-color 0.2s;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .team-card:hover {
+            border-color: var(--accent);
             transform: translateY(-4px);
-            border-color: #64b5ff66;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
         }
 
         .team-photo {
             aspect-ratio: 4 / 3;
+            background: var(--surface-raised);
             overflow: hidden;
-            background: #102741;
         }
 
         .team-photo img {
@@ -626,99 +390,76 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.35s ease;
+            transition: transform 0.3s ease;
         }
 
-        .team-card:hover .team-photo img { transform: scale(1.04); }
+        .team-card:hover .team-photo img {
+            transform: scale(1.05);
+        }
 
-        .team-info { padding: 18px 20px 20px; }
+        .team-info { 
+            padding: 20px; 
+        }
 
         .team-role {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             color: var(--accent);
-            font-size: 0.73rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
         }
 
         .team-name {
-            font-size: 1.12rem;
-            font-weight: 700;
-        }
-
-        .team-desc {
-            margin-top: 5px;
-            color: var(--muted);
-            font-size: 0.87rem;
-        }
-
-        .credit-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 22px;
-            transition: transform 0.2s, border-color 0.2s;
-            opacity: 0;
-            transform: translateY(14px);
-        }
-
-        .credit-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.2s;
-        }
-
-        .credit-card:hover {
-            transform: translateY(-3px);
-            border-color: #64b5ff55;
-        }
-
-        .credit-role {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 6px;
-        }
-
-        .credit-name {
             font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .credit-desc {
-            font-size: 0.88rem;
-            color: var(--muted);
+        .team-name::after {
+            content: "↗";
+            font-size: 0.9rem;
+            opacity: 0;
+            transform: translate(-4px, 4px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            color: var(--accent);
         }
 
+        .team-card:hover .team-name::after {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+
+        /* Terms / Legal Box */
         .terms-box {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 28px;
-            max-width: 760px;
+            border-radius: 10px;
+            padding: 36px;
+            max-width: 800px;
         }
 
         .terms-box h3 {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
-        .terms-box h3 + h3 { margin-top: 22px; }
+        .terms-box h3 + h3 { 
+            margin-top: 24px; 
+        }
 
         .terms-box p,
         .terms-box li {
             color: var(--muted);
-            font-size: 0.93rem;
-            line-height: 1.65;
+            font-size: 0.92rem;
+            line-height: 1.6;
         }
 
         .terms-box ul {
-            margin: 10px 0 16px 18px;
+            margin: 8px 0 16px 20px;
         }
 
         .terms-box a {
@@ -727,16 +468,25 @@
             text-underline-offset: 3px;
         }
 
-        .terms-box a:hover { filter: brightness(1.15); }
+        .terms-box a:hover { 
+            color: var(--accent-hover); 
+        }
 
-        .contact { text-align: center; }
-        .contact .section-intro { margin-inline: auto; }
+        /* Contact Section */
+        .contact { 
+            text-align: center; 
+        }
+        
+        .contact .section-intro { 
+            margin-inline: auto; 
+            margin-bottom: 24px;
+        }
 
+        /* Footer */
         footer {
-            padding: 24px 0;
-            border-top: 1px solid var(--border);
+            padding: 32px 0;
             color: var(--muted);
-            font-size: 0.88rem;
+            font-size: 0.85rem;
         }
 
         footer .wrap {
@@ -747,63 +497,28 @@
             align-items: center;
         }
 
-        footer a { color: var(--muted); transition: color 0.2s; }
-        footer a:hover { color: var(--text); }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
+        footer a { 
+            color: var(--muted); 
+            transition: color 0.15s ease;
+        }
+        
+        footer a:hover { 
+            color: var(--text); 
         }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.55s ease, transform 0.55s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        /* Responsive adjustments */
         @media (max-width: 860px) {
-            .hero { padding: 80px 0; }
-            .hero-layout { grid-template-columns: 1fr 0.85fr; gap: 28px; }
-            .hero-feature { min-height: 320px; padding: 26px; }
-            .feature-orbit { right: 24px; }
-            .feature-dot { right: 100px; }
-            .game-showcase { grid-template-columns: 1fr; }
-            .game-visual, .game-visual img { min-height: 220px; }
-            .game-content { padding: 24px; }
-            .about-grid { grid-template-columns: 1fr; gap: 28px; }
+            .hero-layout { grid-template-columns: 1fr; gap: 40px; }
+            .game-card { grid-template-columns: 1fr; }
+            .game-visual { min-height: 260px; }
+            .game-content { padding: 28px; }
         }
 
         @media (max-width: 560px) {
-            .wrap { width: min(100% - 28px, 1120px); }
-            nav {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 14px 0;
-                gap: 12px;
-            }
-            .nav-links { gap: 14px; font-size: 0.88rem; flex-wrap: wrap; }
-            .hero { padding: 66px 0 74px; }
-            .hero-layout { grid-template-columns: 1fr; gap: 36px; }
-            .hero-feature { min-height: 290px; }
-            .feature-orbit { right: 38px; }
-            .feature-dot { right: 114px; }
-            .game-features { grid-template-columns: 1fr; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                scroll-behavior: auto !important;
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
+            .wrap { width: min(100% - 32px, 1120px); }
+            nav { flex-direction: column; align-items: flex-start; padding: 16px 0; gap: 16px; }
+            .nav-links { gap: 16px; flex-wrap: wrap; }
+            .hero { padding: 80px 0; }
         }
     </style>
 </head>
@@ -813,7 +528,6 @@
             <a class="brand" href="#home"><img src="images/LB.png" alt="LightBlu studio logo">LightBlu</a>
             <div class="nav-links">
                 <a href="#games">Games</a>
-                <a href="#about">About</a>
                 <a href="#team">Team</a>
                 <a href="#terms">Terms</a>
                 <a href="#contact">Contact</a>
@@ -824,224 +538,215 @@
 
     <main>
         <section class="hero" id="home">
-            <div class="hero-bg"></div>
-            <div class="hero-grid"></div>
             <div class="wrap hero-layout">
-                <div class="hero-copy">
-                <h1>LightBlu</h1>
-                    <p class="hero-sub">We make immersive games for Meta Quest.</p>
+                <div>
+                    <h1>LightBlu</h1>
+                    <p class="hero-sub">We build immersive, high-performance VR games exclusively for Meta Quest hardware.</p>
                     <div class="hero-actions">
-                        <a class="button" href="#games">Discover Revolt <span aria-hidden="true">→</span></a>
-                        <a class="button button-outline" href="https://discord.gg/D68j7dDeXm" target="_blank" rel="noopener">Join our Discord</a>
+                        <a class="button" href="#games">Explore Games <span aria-hidden="true">↓</span></a>
+                        <a class="button button-outline" href="https://discord.gg/D68j7dDeXm" target="_blank" rel="noopener">Community Discord</a>
                     </div>
                 </div>
-                <div><img class="hero-logo" src="images/LB.png" alt="LightBlu logo"></div>
+                <div>
+                    <img class="hero-logo" src="images/LB.png" alt="LightBlu logo">
+                </div>
             </div>
         </section>
 
         <section id="games">
             <div class="wrap">
-                <div class="eyebrow reveal">Our Games</div>
-                <h2 class="section-heading reveal">Revolt</h2>
-                <p class="section-intro reveal">Early Access horror title for Meta Quest.</p>
-
-                <div class="game-showcase reveal">
-                    <div class="game-visual">
-                        <img src="images/banner.png" alt="Revolt VR">
-                    </div>
-                    <div class="game-content">
-                        <span class="game-tag">Early Access · Horror · Action</span>
-                        <h3>Revolt</h3>
-                        <div class="game-meta">
-                            <span>Developer: Light Blu</span>
-                            <span>Publisher: Light Blu</span>
-                            <span>Multiplayer</span>
-                        </div>
-                        <p>
-                            Immersive horror with a unique locomotion system.
-                        </p>
-                        <div class="game-features">
-                            <div class="feature-chip">Unique locomotion</div>
-                            <div class="feature-chip">Unique anomalies</div>
-                            <div class="feature-chip">Player customization</div>
-                            <div class="feature-chip">Multiple modes</div>
-                        </div>
-                        <a class="button" href="https://www.meta.com/experiences/revolt/7251063891581210/" target="_blank" rel="noopener">Meta Quest Store</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="wrap" style="margin-top: 80px;" id="games">
-                <h2 class="section-heading reveal">Presence</h2>
-                <p class="section-intro reveal">A new immersive experience currently in development.</p>
-
-                <!-- Progress bar -->
-                <div class="dev-progress reveal">
-                    <div class="dev-progress-header">
-                        <span class="dev-progress-label">Development Progress</span>
-                        <span class="dev-progress-value">90%</span>
-                    </div>
-                    <div class="progress-track">
-                        <div class="progress-fill" style="width: 90%;"></div>
-                    </div>
+                <div class="section-header">
+                    <span class="eyebrow">Catalog</span>
+                    <h2 class="section-heading">Our Games</h2>
+                    <p class="section-intro">Available now or coming soon to the Meta Quest Store.</p>
                 </div>
 
-                <div class="game-showcase reveal">
-                    <div class="game-visual ">
-                        <img src="images\df.jpg" alt="Presence">
-                    </div>
-                    <div class="game-content">
-                        <span class="game-tag">In Development · Coming Soon</span>
-                        <h3>Presence</h3>
-                        <div class="game-meta">
-                            <span>Developer: LightBlu</span>
-                            <span>Platform: Meta Quest</span>
-                            <span>Status: In Progress</span>
+                <div class="game-stack">
+                    <!-- PRESENCE -->
+                    <article class="game-card">
+                        <div class="game-visual">
+                            <img src="images/df.jpg" alt="Presence Development Preview">
                         </div>
-                        <p>
-                           Our upcoming game.
-                        </p>
-                        <div class="game-features">
-                            <div class="feature-chip">Player customization</div>
-                            <div class="feature-chip">Unique anomalies</div>
-                            <div class="feature-chip">More TBA</div>
+                        <div class="game-content">
+                            <span class="game-tag">In Development</span>
+                            <h3>Presence</h3>
+                            <div class="game-meta">
+                                <span>Platform: Meta Quest</span>
+                                <span>Coming Soon</span>
+                            </div>
+                            <div class="dev-progress">
+                                <div class="dev-progress-header">
+                                    <span>Production Progress</span>
+                                    <span class="dev-progress-value">90%</span>
+                                </div>
+                                <div class="progress-track">
+                                    <div class="progress-fill" style="width: 90%;"></div>
+                                </div>
+                            </div>
+                            <p>Our upcoming project</p>
+                            <div class="game-features">
+                                <span class="feature-chip">Player Customization</span>
+                                <span class="feature-chip">Atmospheric Horror</span>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    </article>
 
-        <section class="about" id="about">
-            <div class="wrap">
-                <div class="about-grid">
-                    <div>
-                        <div class="eyebrow reveal">Studio</div>
-                        <h2 class="section-heading reveal">About LightBlu</h2>
-                        <div class="about-copy reveal">
-                            <p>LightBlu is an independent studio making VR games for Meta Quest.</p>
+                    <!-- REVOLT -->
+                    <article class="game-card">
+                        <div class="game-visual">
+                            <img src="images/banner.png" alt="Revolt VR Gameplay">
                         </div>
-                    </div>
-                    <div class="about-image reveal">
-                        <img src="images/LB.png" alt="LightBlu logo">
-                    </div>
+                        <div class="game-content">
+                            <span class="game-tag">Early Access · Horror · Action</span>
+                            <h3>Revolt</h3>
+                            <div class="game-meta">
+                                <span>Platform: Meta Quest</span>
+                                <span>Multiplayer</span>
+                            </div>
+                            <p>An intense multiplayer VR horror experience featuring specialized locomotion mechanics and unpredictable anomalies.</p>
+                            <div class="game-features">
+                                <span class="feature-chip">Unique locomotion</span>
+                                <span class="feature-chip">Dynamic anomalies</span>
+                                <span class="feature-chip">Customization</span>
+                            </div>
+                            <div>
+                                <a class="button" href="https://www.meta.com/experiences/revolt/7251063891581210/" target="_blank" rel="noopener">Quest Store</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- MBG:VR -->
+                    <article class="game-card">
+                        <div class="game-visual">
+                            <img src="images/MBG.jpeg" alt="MBG:VR Gameplay">
+                        </div>
+                        <div class="game-content">
+                            <span class="game-tag">Early Access · Sandbox · Adventure</span>
+                            <h3>MBG:VR</h3>
+                            <div class="game-meta">
+                                <span>Platform: Meta Quest</span>
+                                <span>Free · Multiplayer</span>
+                            </div>
+                            <p>An imagination-fueled sandbox where every world is yours to bend. Shape structures with tactile VR tools, mine resources, craft gear, and survive together.</p>
+                            <div class="game-features">
+                                <span class="feature-chip">Build & Fortify</span>
+                                <span class="feature-chip">Mine & Craft</span>
+                                <span class="feature-chip">Dungeons & Loot</span>
+                                <span class="feature-chip">PvE & PvP</span>
+                            </div>
+                            <div>
+                                <a class="button" href="https://www.meta.com/en-gb/experiences/mbgvr/1320773401113496/" target="_blank" rel="noopener">Quest Store</a>
+                            </div>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
         <section id="team">
             <div class="wrap">
-                <div class="eyebrow reveal">Team</div>
-                <h2 class="section-heading reveal">The people behind the game</h2>
-
+                <div class="section-header">
+                    <span class="eyebrow">LightBlu Team</span>
+                    <h2 class="section-heading">The people behind LightBlu</h2>
+                </div>
                 <div class="team-grid">
-                    <article class="team-card">
-                        <div class="team-photo"><img src="images/Monkey.png" alt="Portrait placeholder for developer one"></div>
+                    <a class="team-card" href="https://youtube.com/@CrueltyServer" target="_blank" rel="noopener">
+                        <div class="team-photo"><img src="images/CrueltyServer.png" alt="CrueltyServer"></div>
                         <div class="team-info">
                             <div class="team-role">Game Designer</div>
                             <h3 class="team-name">CrueltyServer</h3>
                         </div>
-                    </article>
-                    <article class="team-card">
-                        <div class="team-photo"><img src="images/Monkey.png" alt="Portrait placeholder for developer two"></div>
+                    </a>
+                    <a class="team-card" href="https://youtube.com/@IIaiden" target="_blank" rel="noopener">
+                        <div class="team-photo"><img src="images/iiaiden.png" alt="IIaiden"></div>
+                        <div class="team-info">
+                            <div class="team-role">Game Designer</div>
+                            <h3 class="team-name">IIaiden</h3>
+                        </div>
+                    </a>
+                    <a class="team-card" href="https://youtube.com/@Skiplawreal" target="_blank" rel="noopener">
+                        <div class="team-photo"><img src="images/big skip.png" alt="Skiplaw"></div>
                         <div class="team-info">
                             <div class="team-role">Coder</div>
                             <h3 class="team-name">Skiplaw</h3>
                         </div>
-                    </article>
-                    <article class="team-card">
-                        <div class="team-photo"><img src="images/Monkey.png" alt="Portrait placeholder for developer three"></div>
-                        <div class="team-info">
-                            <div class="team-role">3D Artist</div>
-                            <h3 class="team-name">IIaiden</h3>
-                        </div>
-                    </article>
-                    <article class="team-card">
-                        <div class="team-photo"><img src="images/Monkey.png" alt="Portrait placeholder for developer three"></div>
+                    </a>
+
+                    <a class="team-card" href="https://youtube.com/@Aramations" target="_blank" rel="noopener">
+                        <div class="team-photo"><img src="images/ara.jpg" alt="Aramations"></div>
                         <div class="team-info">
                             <div class="team-role">Artist</div>
                             <h3 class="team-name">Aramations</h3>
                         </div>
-                    </article>
+                    </a>
+                    <a class="team-card" href="https://bsky.app/profile/did:plc:oxe3vm6dtbro3r5223xdnzc6" target="_blank" rel="noopener">
+                        <div class="team-photo"><img src="images/squosh.png" alt="Squosh"></div>
+                        <div class="team-info">
+                            <div class="team-role">Composer</div>
+                            <h3 class="team-name">Squosh</h3>
+                        </div>
+                    </a>
+                    <a class="team-card" href="https://youtube.com/@AidenIThink5" target="_blank" rel="noopener">
+                        <div class="team-photo"><img src="images/aiden2.png" alt="AidenIThink"></div>
+                        <div class="team-info">
+                            <div class="team-role">Community Manager</div>
+                            <h3 class="team-name">AidenIThink</h3>
+                        </div>
+                    </a>
+                    <a class="team-card" href="" target="_blank" rel="noopener">
+                        <div class="team-photo"><img src="images/stone.png" alt="Sunstone"></div>
+                        <div class="team-info">
+                            <div class="team-role">3D Artist</div>
+                            <h3 class="team-name">Sunstone</h3>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section id="terms" style="background: #ffffff03; border-block: 1px solid var(--border);">
+        <section id="terms">
             <div class="wrap">
-                <div class="eyebrow reveal">Legal</div>
-                <h2 class="section-heading reveal">Meta Quest terms</h2>
-                <p class="section-intro reveal">Info for players of Revolt on Meta.</p>
-
-                <div class="terms-box reveal">
-                    <h3>Platform</h3>
-                    <p>
-                        Our games distributed on the Meta Quest Store. By downloading or playing, you agree to Meta’s platform terms.
-                    </p>
+                <div class="section-header">
+                    <span class="eyebrow">Legal</span>
+                    <h2 class="section-heading">Meta Quest terms</h2>
+                    <p class="section-intro">Important legal and policy details for players.</p>
+                </div>
+                <div class="terms-box">
+                    <h3>Platform & Distribution</h3>
+                    <p>Our titles are distributed through the Meta Quest Store. Downloading or interacting with our apps constitutes agreement with Meta's platform terms.</p>
                     <ul>
                         <li><a href="https://www.meta.com/legal/quest/terms-of-service/" target="_blank" rel="noopener">Meta Quest Terms of Service</a></li>
                         <li><a href="https://developers.meta.com/horizon/policy" target="_blank" rel="noopener">Meta Developer Policies</a></li>
                         <li><a href="https://developers.meta.com/horizon/policy/content-guidelines" target="_blank" rel="noopener">Meta Content Guidelines</a></li>
                         <li><a href="https://www.meta.com/legal/privacy-policy/" target="_blank" rel="noopener">Meta Privacy Policy</a></li>
                     </ul>
-
-                    <h3>Game notices</h3>
-                    <p>
-                        Rated Teen (mild violence, blood, users interact; in-game purchases where applicable).
-                        Early Access content and balance can change. Internet required. Comfort level: Intense. Clear space and take breaks.
-                    </p>
-
-                    <h3>Privacy</h3>
-                    <p>
-                        The app may access limited account data (display name, username, user ID, profile pictures, avatars, age group, and related follower lists) as listed on the Meta store page.
-                        Developer privacy policy is linked from the official Revolt store listing.
-                    </p>
-
-                    <h3>Contact</h3>
-                    <p>
-                        For LightBlu support or rights questions, use the contact section below.
-                        Platform issues go through Meta support.
-                    </p>
+                    <h3>Game Notices</h3>
+                    <p>Rated Teen (mild violence, blood, user interaction; optional in-game purchases). Early Access balance and feature sets are subject to change. Requires an active internet connection. Recommended intense comfort level: clear a safe physical space and take regular breaks.</p>
+                    <h3>Privacy & Data</h3>
+                    <p>Our apps may access limited account data (display names, usernames, profile imagery, avatars, and follower listings) as outlined on official store pages. For direct privacy inquiries, contact support via email.</p>
                 </div>
             </div>
         </section>
 
         <section class="contact" id="contact">
             <div class="wrap">
-                <div class="eyebrow reveal">Contact</div>
-                <h2 class="section-heading reveal">Get in touch</h2>
-                <p class="section-intro reveal">Questions or feedback about Revolt or LightBlu.</p>
-                <a class="button reveal" href="mailto:intrusionstudio@gmail.com">Email us</a>
-            </div>
+                <span class="eyebrow">Contact</span>
+                <h2 class="section-heading">Get in touch</h2>
+                <p class="section-intro">Have questions, feedback, or support inquiries regarding Revolt, MBG:VR, or Presence?</p>
+                <a class="button" href="mailto:intrusionstudio@gmail.com">Email Studio Support</a>
+            </div>  
         </section>
     </main>
 
     <footer>
         <div class="wrap">
-            <span>© 2026 LightBlu</span>
+            <span>© 2026 LightBlu. All rights reserved.</span>
             <span>
-                <a href="#terms">Terms</a> ·
-                <a href="https://www.meta.com/experiences/revolt/7251063891581210/" target="_blank" rel="noopener">Revolt on Meta</a>
+                <a href="#terms">Terms</a> · 
+                <a href="https://www.meta.com/experiences/revolt/7251063891581210/" target="_blank" rel="noopener">Revolt</a> · 
+                <a href="https://www.meta.com/en-gb/experiences/mbgvr/1320773401113496/" target="_blank" rel="noopener">MBG:VR</a>
             </span>
         </div>
     </footer>
-
-    <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const el = entry.target;
-                    const delay = el.classList.contains('credit-card')
-                        ? [...el.parentElement.children].indexOf(el) * 70
-                        : 0;
-                    setTimeout(() => el.classList.add('visible'), delay);
-                    observer.unobserve(el);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
-
-        document.querySelectorAll('.reveal, .game-showcase, .credit-card').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
 </body>
 </html>
